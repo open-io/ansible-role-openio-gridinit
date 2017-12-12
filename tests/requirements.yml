@@ -1,0 +1,3 @@
+- src: https://github.com/racciari/ansible-role-repo-openio-sds
+  version: master
+  name: repo-openio-sds

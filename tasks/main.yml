@@ -1,0 +1,27 @@
+---
+# tasks file for ansible-role-gridinit
+- name: Install packages
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ gridinit_packages }}"
+
+- name: Configuration
+  template:
+    src: gridinit.conf.j2
+    dest: "{{ gridinit_config_file }}"
+
+- name: Ensure directory exists
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+  with_items:
+    - "{{ gridinit_conf_confd }}"
+    - "{{ gridinit_rundir }}"
+
+- name: Ensure service is started
+  service:
+    name: "{{ gridinit_service_name }}"
+    state: started
+...

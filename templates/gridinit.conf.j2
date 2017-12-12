@@ -1,0 +1,12 @@
+[Default]
+listen={{ gridinit_rundir }}/gridinit.sock
+pidfile={{ gridinit_rundir }}/gridinit.pid
+uid={{ gridinit_user }}
+gid={{ gridinit_group }}
+working_dir={{ gridinit_rundir }}
+
+limit.core_size={{ gridinit_limits['core_size']}}
+limit.max_files={{ gridinit_limits['max_files']}}
+limit.stack_size={{ gridinit_limits['stack_size']}}
+
+include={{ gridinit_conf_confd }}/*
