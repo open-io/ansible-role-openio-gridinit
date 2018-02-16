@@ -131,7 +131,7 @@ def main():
                 fields = [field for field in line.split() if field != '']
                 # fields = [field for field in line.split() if re.search(name,line)]
                 process_name = fields[0]
-                print process_name+'\n'
+                print(process_name+'\n')
                 status = fields[1]
                 # if process_name != name:
                 if process_name == 'KEY':
