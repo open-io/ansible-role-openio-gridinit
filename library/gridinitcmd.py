@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python2.7
 # -*- coding: utf-8 -*-
 
 # (c) 2017, Sebastien Lapierre <sebastien.lapierre@openio.io>
