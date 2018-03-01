@@ -1,15 +1,40 @@
 ---
 # tasks file for ansible-role-gridinit
+
+- include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+  tags: install
+
+- name: Install repository
+  include_tasks: "openio_install_repo_{{ ansible_os_family }}.yml"
+  when: openio_gridinit_repo_managed
+
 - name: Install packages
   package:
     name: "{{ item }}"
     state: present
-  with_items: "{{ gridinit_packages }}"
+  with_items: "{{ openio_gridinit_packages }}"
+
+- name: Create the group openio
+  group:
+    name: openio
+    gid: "{{ openio_group_openio_gid | default('220')}}"
+
+- name: Create the user openio
+  user:
+    name: openio
+    comment: "openio account"
+    uid: "{{ openio_user_openio_uid | default('120')}}"
+    group: openio
+    #groups: gridinit
+    #append: yes
 
 - name: Configuration
   template:
     src: gridinit.conf.j2
-    dest: "{{ gridinit_config_file }}"
+    dest: "{{ openio_gridinit_config_file }}"
 
 - name: Ensure directory exists
   file:
@@ -17,11 +42,11 @@
     state: directory
     mode: 0755
   with_items:
-    - "{{ gridinit_conf_confd }}"
-    - "{{ gridinit_rundir }}"
+    - "{{ openio_gridinit_conf_confd }}"
+    - "{{ openio_gridinit_rundir }}"
 
 - name: Ensure service is started
   service:
-    name: "{{ gridinit_service_name }}"
+    name: "{{ openio_gridinit_service_name }}"
     state: started
 ...
