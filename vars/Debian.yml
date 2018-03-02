@@ -1,0 +1,13 @@
+# roles/ROLENAME/vars/Debian.yml
+#
+# Distribution-specific variables for Ubuntu, Debian, ...
+---
+
+openio_gridinit_packages:
+  - openio-gridinit
+
+openio_gridinit_service_name: gridinit
+
+openio_gridinit_repo_gpgkey: 51DB6A8D
+openio_gridinit_repo_baseurl: "deb http://mirror.openio.io/pub/repo/openio/sds/{{ openio_sds_release }}/{{ ansible_lsb.id }}/ {{ ansible_distribution_release }}/"
+...

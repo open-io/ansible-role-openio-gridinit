@@ -1,0 +1,19 @@
+---
+- name: Debian| add apt key
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: "{{ openio_gridinit_repo_gpgkey }}"
+
+
+- name: Debian| repository installation
+  apt_repository:
+    repo: "{{ openio_gridinit_repo_baseurl }}"
+    state: present
+    filename: openio
+
+- name: Debian| update cache
+  apt:
+    update_cache: yes
+  changed_when: false
+
+...

@@ -1,12 +1,13 @@
+# {{ ansible_managed }}
 [Default]
-listen={{ gridinit_rundir }}/gridinit.sock
-pidfile={{ gridinit_rundir }}/gridinit.pid
-uid={{ gridinit_user }}
-gid={{ gridinit_group }}
-working_dir={{ gridinit_rundir }}
+listen={{ openio_gridinit_rundir }}/gridinit.sock
+pidfile={{ openio_gridinit_rundir }}/gridinit.pid
+uid={{ openio_gridinit_user }}
+gid={{ openio_gridinit_group }}
+working_dir={{ openio_gridinit_rundir }}
 
-limit.core_size={{ gridinit_limits['core_size']}}
-limit.max_files={{ gridinit_limits['max_files']}}
-limit.stack_size={{ gridinit_limits['stack_size']}}
+limit.core_size={{ openio_gridinit_limits['core_size']}}
+limit.max_files={{ openio_gridinit_limits['max_files']}}
+limit.stack_size={{ openio_gridinit_limits['stack_size']}}
 
-include={{ gridinit_conf_confd }}/*
+include={{ openio_gridinit_conf_confd }}/*/*

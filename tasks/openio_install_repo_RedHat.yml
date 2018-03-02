@@ -1,0 +1,6 @@
+---
+- name: "RedHat| Install repository"
+  package:
+    name: "http://mirror.openio.io/pub/repo/openio/sds/{{ openio_sds_release }}/el/openio-sds-release-{{ openio_sds_release }}-1.el.noarch.rpm"
+    state: present
+...

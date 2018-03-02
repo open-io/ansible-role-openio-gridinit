@@ -10,17 +10,21 @@
 - name: Install repository
   include_tasks: "openio_install_repo_{{ ansible_os_family }}.yml"
   when: openio_gridinit_repo_managed
+  tags: install
 
 - name: Install packages
   package:
     name: "{{ item }}"
     state: present
   with_items: "{{ openio_gridinit_packages }}"
+  tags: install
+
 
 - name: Create the group openio
   group:
     name: openio
     gid: "{{ openio_group_openio_gid | default('220')}}"
+  tags: install
 
 - name: Create the user openio
   user:
@@ -30,11 +34,7 @@
     group: openio
     #groups: gridinit
     #append: yes
-
-- name: Configuration
-  template:
-    src: gridinit.conf.j2
-    dest: "{{ openio_gridinit_config_file }}"
+  tags: install
 
 - name: Ensure directory exists
   file:
@@ -44,9 +44,47 @@
   with_items:
     - "{{ openio_gridinit_conf_confd }}"
     - "{{ openio_gridinit_rundir }}"
+  tags: install
+
+- name: Ensure sub-directory for namespace exists
+  file:
+    path: "{{ openio_gridinit_conf_confd }}/{{ item }}"
+    state: directory
+    mode: 0755
+  with_items: "{{ openio_gridinit_services | map(attribute='namespace') | list }}"
+  tags: install
+
+- name: Configuration gridinit
+  template:
+    src: gridinit.conf.j2
+    dest: "{{ openio_gridinit_config_file }}"
+  with_items: "{{ openio_gridinit_services }}"
+  when: (item.state|default('present')) == 'present'
+  tags: configure
+  notify: reload gridinit
+
+- name: Configuration gridinit services
+  template:
+    src: gridinit-service.j2
+    dest: "{{ openio_gridinit_conf_confd }}/{{ item.namespace }}/{{ item.name }}.conf"
+  with_items: "{{ openio_gridinit_services }}"
+  when: (item.state|default('present')) == 'present'
+  tags: configure
+  notify: reload gridinit
+
+- name: Configuration gridinit remove
+  file:
+    path: "{{ openio_gridinit_conf_confd }}/{{ item.namespace }}/{{ item.name }}.conf"
+    state: absent
+  with_items: "{{ openio_gridinit_services }}"
+  when: (item.state|default('present')) == 'absent'
+  tags: configure
+  notify: reload gridinit
+
 
 - name: Ensure service is started
   service:
     name: "{{ openio_gridinit_service_name }}"
     state: started
+  tags: configure
 ...
