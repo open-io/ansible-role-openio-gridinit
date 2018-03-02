@@ -20,23 +20,21 @@
   tags: install
 
 
-- name: Create the group openio
+- name: Create the 'openio' group
   group:
     name: openio
     gid: "{{ openio_group_openio_gid | default('220')}}"
   tags: install
 
-- name: Create the user openio
+- name: Create the 'openio' user
   user:
     name: openio
     comment: "openio account"
     uid: "{{ openio_user_openio_uid | default('120')}}"
     group: openio
-    #groups: gridinit
-    #append: yes
   tags: install
 
-- name: Ensure directory exists
+- name: Ensure directories exists
   file:
     path: "{{ item }}"
     state: directory
@@ -54,7 +52,7 @@
   with_items: "{{ openio_gridinit_services | map(attribute='namespace') | list }}"
   tags: install
 
-- name: Configuration gridinit
+- name: Add gridinit configuration file
   template:
     src: gridinit.conf.j2
     dest: "{{ openio_gridinit_config_file }}"

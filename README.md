@@ -3,7 +3,7 @@
 
 An Ansible role for gridinit. Specifically, the responsibilities of this role are to:
 
-- install the gridinit
+- install gridinit
 - configure service
 - remove unnecessary service
 
@@ -73,7 +73,7 @@ node1 ansible_host=192.168.1.173
 ```
 ## Service
 
-A service is a dict like this. Commented keys are optionals.
+A `service` is a dict like this. Commented keys are optionals.
 
 ```yaml
 openio_gridinit_services:
@@ -86,11 +86,11 @@ openio_gridinit_services:
       enabled: true
       start_at_boot: true
       on_die: respawn
-			#group: foo
+      #group: foo
       uid: root
       gid: root
       #env_PATH: /usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
-			#env_LD_LIBRARY_PATH: 
+      #env_LD_LIBRARY_PATH: 
 ```
 
 ## Contributing
