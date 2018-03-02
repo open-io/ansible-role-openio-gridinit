@@ -4,4 +4,31 @@
 - hosts: all
   become: true
   roles:
-    - role_under_test
+    - role: role_under_test
+      openio_gridinit_repo_managed: true
+      openio_gridinit_services: 
+        - name: meta1-1
+          namespace: OPENIO
+          type: meta1
+          configuration:
+            command: /bin/true
+            enabled: true
+            start_at_boot: true
+            on_die: respawn
+            uid: root
+            gid: root
+            env_PATH: /usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+
+        - name: rawx-1
+          namespace: OPENIO2
+          type: rawx
+          state: absent
+          configuration:
+            command: /bin/true
+            enabled: true
+            start_at_boot: true
+            on_die: respawn
+            group: bar
+            uid: root
+            gid: root
+
