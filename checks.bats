@@ -29,9 +29,9 @@
 }
 
 @test 'Status output' {
-  run bash -c "docker exec -ti ${SUT_ID} bash -c 'sleep 2 && gridinit_cmd status' | tail -n1 | tr -s ' ' ' '"
+  run bash -c "docker exec -ti ${SUT_ID} bash -c 'gridinit_cmd status' | tail -n1 | tr -s ' ' ' '"
   echo "output: "$output
   echo "status: "$status
   [[ "${status}" -eq "0" ]]
-  [[ "${output}" =~ "OPENIO-meta1-1 BROKEN -1 OPENIO,meta1,meta1-1" ]]
+  [[ "${output}" =~ "OPENIO-meta1-1 BROKEN -1 OPENIO,meta1,meta1-1" ]] || [[ "${output}" =~ "OPENIO-meta1-1 DOWN -1 OPENIO,meta1,meta1-1" ]]
 }
