@@ -29,7 +29,7 @@
 }
 
 @test 'Status output' {
-  run bash -c "docker exec -ti ${SUT_ID} bash -c 'gridinit_cmd status' | tail -n1 | tr -s ' ' ' '"
+  run bash -c "docker exec -ti ${SUT_ID} bash -c 'sleep 2 && gridinit_cmd status' | tail -n1 | tr -s ' ' ' '"
   echo "output: "$output
   echo "status: "$status
   [[ "${status}" -eq "0" ]]
