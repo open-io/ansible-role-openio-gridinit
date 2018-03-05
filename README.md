@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/open-io/ansible-role-gridinit.svg?branch=master)](https://travis-ci.org/open-io/ansible-role-gridinit)
+[![Build Status](https://travis-ci.org/open-io/ansible-role-openio-gridinit.svg?branch=master)](https://travis-ci.org/open-io/ansible-role-openio-gridinit)
 # Ansible role `gridinit`
 
 An Ansible role for gridinit. Specifically, the responsibilities of this role are to:
