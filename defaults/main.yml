@@ -2,7 +2,6 @@
 # defaults file for ansible-role-gridinit
 
 openio_sds_release: 17.04
-openio_gridinit_repo_managed: true
 openio_gridinit_user: root
 openio_gridinit_group: root
 openio_gridinit_config_file: /etc/gridinit.conf

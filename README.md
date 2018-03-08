@@ -17,7 +17,6 @@ An Ansible role for gridinit. Specifically, the responsibilities of this role ar
 | Variable   | Default | Comments (type)  |
 | :---       | :---    | :---             |
 | `openio_sds_release` | `17.04` | Distribution of openio SDS used |
-| `openio_gridinit_repo_managed` | `true` | Install the package repository  |
 | `openio_gridinit_user` | `root` | User to run  |
 | `openio_gridinit_group` | `root` | Group to run |
 | `openio_gridinit_config_file` | `/etc/gridinit.conf` | Path to the parent configuration file |

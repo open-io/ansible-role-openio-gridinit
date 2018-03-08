@@ -7,11 +7,6 @@
     - "{{ ansible_os_family }}.yml"
   tags: install
 
-- name: Install repository
-  include_tasks: "openio_install_repo_{{ ansible_os_family }}.yml"
-  when: openio_gridinit_repo_managed
-  tags: install
-
 - name: Install packages
   package:
     name: "{{ item }}"
