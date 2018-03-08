@@ -28,7 +28,7 @@ An Ansible role for gridinit. Specifically, the responsibilities of this role ar
 
 ## Dependencies
 
-None
+- You have to use this role after the role `ansible-role-openio-repository` (like [this](https://github.com/open-io/ansible-role-openio-gridinit/blob/docker-tests/test.yml#L7))
 
 ## Example Playbook
 
