@@ -4,6 +4,8 @@
 - hosts: all
   become: true
   roles:
+    - role: repo-openio
+
     - role: role_under_test
       openio_gridinit_repo_managed: true
       openio_gridinit_services: 
