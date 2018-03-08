@@ -1,16 +1,15 @@
 ---
 # defaults file for ansible-role-gridinit
 
-gridinit_user: root
-gridinit_group: root
-gridinit_config_file: /etc/gridinit.conf
-gridinit_conf_confd: /etc/gridinit.d
-gridinit_rundir: /run/gridinit
-gridinit_service_name: gridinit
-gridinit_packages:
-  - openio-gridinit
+openio_gridinit_user: root
+openio_gridinit_group: root
+openio_gridinit_config_file: /etc/gridinit.conf
+openio_gridinit_conf_confd: /etc/gridinit.d
+openio_gridinit_rundir: /run/gridinit
 
-gridinit_limits:
+openio_gridinit_limits:
   core_size: -1
   max_files: 65536
   stack_size: 8192
+
+openio_gridinit_services: []

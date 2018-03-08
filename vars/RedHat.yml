@@ -1,0 +1,11 @@
+# roles/gridinit/vars/RedHat.yml
+#
+# Distribution-specific variables for RHEL, CentOS, ...
+---
+
+openio_gridinit_packages:
+  - openio-gridinit
+
+openio_gridinit_service_name: gridinit
+
+...

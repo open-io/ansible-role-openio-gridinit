@@ -1,38 +1,106 @@
-Role Name
-=========
+[![Build Status](https://travis-ci.org/open-io/ansible-role-openio-gridinit.svg?branch=master)](https://travis-ci.org/open-io/ansible-role-openio-gridinit)
+# Ansible role `gridinit`
 
-A brief description of the role goes here.
+An Ansible role for gridinit. Specifically, the responsibilities of this role are to:
 
-Requirements
-------------
+- install gridinit
+- configure service
+- remove unnecessary service
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+## Requirements
 
-Role Variables
---------------
+- Ansible 2.4+
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+## Role Variables
 
-Dependencies
-------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+| Variable   | Default | Comments (type)  |
+| :---       | :---    | :---             |
+| `openio_gridinit_user` | `root` | User to run  |
+| `openio_gridinit_group` | `root` | Group to run |
+| `openio_gridinit_config_file` | `/etc/gridinit.conf` | Path to the parent configuration file |
+| `openio_gridinit_conf_confd` | `/etc/gridinit.d` | Path to the service's folder (by namespace)  |
+| `openio_gridinit_rundir` | `/run/gridinit` | Path to the tmpfs subfolder  |
+| `openio_gridinit_limits` | `dict` | Defines the max open files and limits for coredump  |
+| `openio_gridinit_services` | `[]` | Defines services to configure |
 
-Example Playbook
-----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+## Dependencies
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+- You have to use this role after the role `ansible-role-openio-repository` (like [this](https://github.com/open-io/ansible-role-openio-gridinit/blob/docker-tests/test.yml#L7))
 
-License
--------
+## Example Playbook
 
-BSD
+```yaml
+- hosts: all
+  gather_facts: true
+  become: true
+  roles:
+    - role: ansible-role-gridinit
+      openio_gridinit_services:
+        - name: meta1-1
+          namespace: OPENIO
+          type: meta1
+          configuration:
+            command: /bin/true
+            enabled: true
+            start_at_boot: true
+            on_die: respawn
+            uid: root
+            gid: root
+            env_PATH: /usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
 
-Author Information
-------------------
+        - name: rawx-1
+          namespace: OPENIO2
+          type: rawx
+          state: absent 
+          configuration:
+            command: /bin/true
+            enabled: true
+            start_at_boot: true
+            on_die: respawn
+            group: bar
+            uid: root
+            gid: root
+```
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+
+```ini
+[servers]
+node1 ansible_host=192.168.1.173
+```
+## Service
+
+A `service` is a dict like this. Commented keys are optionals.
+
+```yaml
+openio_gridinit_services:
+  - name: meta1-1
+    namespace: OPENIO
+    #state: present
+    type: meta1
+    configuration:
+      command: /bin/true
+      enabled: true
+      start_at_boot: true
+      on_die: respawn
+      #group: foo
+      uid: root
+      gid: root
+      #env_PATH: /usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+      #env_LD_LIBRARY_PATH: 
+```
+
+## Contributing
+
+Issues, feature requests, ideas are appreciated and can be posted in the Issues section.
+
+Pull requests are also very welcome. The best way to submit a PR is by first creating a fork of this Github project, then creating a topic branch for the suggested change and pushing that branch to your own fork. Github can then easily create a PR based on that branch.
+
+## License
+
+Apache License, Version 2.0
+
+## Contributors
+
+- [Cedric DELGEHIER](https://github.com/cdelgehier/) (maintainer)

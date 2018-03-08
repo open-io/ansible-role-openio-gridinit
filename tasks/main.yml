@@ -1,27 +1,84 @@
 ---
 # tasks file for ansible-role-gridinit
+
+- name: Include OS variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+  tags: install
+
 - name: Install packages
   package:
     name: "{{ item }}"
     state: present
-  with_items: "{{ gridinit_packages }}"
+  with_items: "{{ openio_gridinit_packages }}"
+  tags: install
 
-- name: Configuration
-  template:
-    src: gridinit.conf.j2
-    dest: "{{ gridinit_config_file }}"
 
-- name: Ensure directory exists
+- name: Create the 'openio' group
+  group:
+    name: openio
+    gid: "{{ openio_group_openio_gid | default('220')}}"
+  tags: install
+
+- name: Create the 'openio' user
+  user:
+    name: openio
+    comment: "openio account"
+    uid: "{{ openio_user_openio_uid | default('120')}}"
+    group: openio
+  tags: install
+
+- name: Ensure directories exists
   file:
     path: "{{ item }}"
     state: directory
     mode: 0755
   with_items:
-    - "{{ gridinit_conf_confd }}"
-    - "{{ gridinit_rundir }}"
+    - "{{ openio_gridinit_conf_confd }}"
+    - "{{ openio_gridinit_rundir }}"
+  tags: install
+
+- name: Ensure sub-directory for namespace exists
+  file:
+    path: "{{ openio_gridinit_conf_confd }}/{{ item }}"
+    state: directory
+    mode: 0755
+  with_items: "{{ openio_gridinit_services | map(attribute='namespace') | list }}"
+  tags: install
+
+- name: Add gridinit configuration file
+  template:
+    src: gridinit.conf.j2
+    dest: "{{ openio_gridinit_config_file }}"
+  with_items: "{{ openio_gridinit_services }}"
+  when: (item.state|default('present')) == 'present'
+  tags: configure
+  notify: reload gridinit
+
+- name: Configuration gridinit services
+  template:
+    src: gridinit-service.j2
+    dest: "{{ openio_gridinit_conf_confd }}/{{ item.namespace }}/{{ item.name }}.conf"
+  with_items: "{{ openio_gridinit_services }}"
+  when: (item.state|default('present')) == 'present'
+  tags: configure
+  notify: reload gridinit
+
+- name: Configuration gridinit remove
+  file:
+    path: "{{ openio_gridinit_conf_confd }}/{{ item.namespace }}/{{ item.name }}.conf"
+    state: absent
+  with_items: "{{ openio_gridinit_services }}"
+  when: (item.state | default('present')) == 'absent'
+  tags: configure
+  notify: reload gridinit
+
 
 - name: Ensure service is started
   service:
-    name: "{{ gridinit_service_name }}"
+    name: "{{ openio_gridinit_service_name }}"
     state: started
+  tags: configure
 ...

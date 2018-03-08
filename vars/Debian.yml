@@ -1,0 +1,11 @@
+# roles/ROLENAME/vars/Debian.yml
+#
+# Distribution-specific variables for Ubuntu, Debian, ...
+---
+
+openio_gridinit_packages:
+  - openio-gridinit
+
+openio_gridinit_service_name: gridinit
+
+...
