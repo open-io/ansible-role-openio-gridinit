@@ -70,7 +70,7 @@
     path: "{{ openio_gridinit_conf_confd }}/{{ item.namespace }}/{{ item.name }}.conf"
     state: absent
   with_items: "{{ openio_gridinit_services }}"
-  when: (item.state|default('present')) == 'absent'
+  when: (item.state | default('present')) == 'absent'
   tags: configure
   notify: reload gridinit
 
