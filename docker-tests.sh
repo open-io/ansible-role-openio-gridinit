@@ -24,6 +24,7 @@ IFS=$'\t\n'   # Split on newlines and tabs (but not on spaces)
 readonly container_id="$(mktemp)"
 readonly role_dir='/etc/ansible/roles/role_under_test'
 readonly test_playbook="${role_dir}/docker-tests/test.yml"
+readonly requirements="${role_dir}/docker-tests/requirements.yml"
 
 # geerlingguy
 #readonly docker_image="geerlingguy/docker"
@@ -45,6 +46,7 @@ main() {
 
   start_container
 
+  run_galaxy_install
   run_syntax_check
   run_test_playbook
   run_idempotence_test
@@ -153,6 +155,12 @@ run_test_playbook() {
   log 'Running playbook'
   exec_container ansible-playbook "${test_playbook}" --diff
   log 'Run finished'
+}
+
+run_galaxy_install() {
+  log "Running ansible-galaxy install"
+  exec_container ansible-galaxy install -r "${requirements}"
+  log "Run finished"
 }
 
 run_idempotence_test() {
