@@ -15,18 +15,17 @@
   with_items: "{{ openio_gridinit_packages }}"
   tags: install
 
-
 - name: Create the 'openio' group
   group:
     name: openio
-    gid: "{{ openio_group_openio_gid | default('220')}}"
+    gid: "{{ openio_group_openio_gid | default('220') }}"
   tags: install
 
 - name: Create the 'openio' user
   user:
     name: openio
     comment: "openio account"
-    uid: "{{ openio_user_openio_uid | default('120')}}"
+    uid: "{{ openio_user_openio_uid | default('120') }}"
     group: openio
   tags: install
 
@@ -53,7 +52,7 @@
     src: gridinit.conf.j2
     dest: "{{ openio_gridinit_config_file }}"
   with_items: "{{ openio_gridinit_services }}"
-  when: (item.state|default('present')) == 'present'
+  when: (item.state | default('present')) == 'present'
   tags: configure
   notify: reload gridinit
 
@@ -62,7 +61,7 @@
     src: gridinit-service.j2
     dest: "{{ openio_gridinit_conf_confd }}/{{ item.namespace }}/{{ item.name }}.conf"
   with_items: "{{ openio_gridinit_services }}"
-  when: (item.state|default('present')) == 'present'
+  when: (item.state | default('present')) == 'present'
   tags: configure
   notify: reload gridinit
 
@@ -74,7 +73,6 @@
   when: (item.state | default('present')) == 'absent'
   tags: configure
   notify: reload gridinit
-
 
 - name: Ensure service is started
   service:

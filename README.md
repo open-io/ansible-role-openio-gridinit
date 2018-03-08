@@ -4,8 +4,8 @@
 An Ansible role for gridinit. Specifically, the responsibilities of this role are to:
 
 - install gridinit
-- configure service
-- remove unnecessary service
+- configure service(s)
+- remove unnecessary service(s)
 
 ## Requirements
 
@@ -13,17 +13,15 @@ An Ansible role for gridinit. Specifically, the responsibilities of this role ar
 
 ## Role Variables
 
-
-| Variable   | Default | Comments (type)  |
-| :---       | :---    | :---             |
-| `openio_gridinit_user` | `root` | User to run  |
+| Variable   | Default | Comments (type) |
+| :---       | :---    | :---            |
+| `openio_gridinit_user` | `root` | User to run |
 | `openio_gridinit_group` | `root` | Group to run |
 | `openio_gridinit_config_file` | `/etc/gridinit.conf` | Path to the parent configuration file |
-| `openio_gridinit_conf_confd` | `/etc/gridinit.d` | Path to the service's folder (by namespace)  |
-| `openio_gridinit_rundir` | `/run/gridinit` | Path to the tmpfs subfolder  |
-| `openio_gridinit_limits` | `dict` | Defines the max open files and limits for coredump  |
+| `openio_gridinit_conf_confd` | `/etc/gridinit.d` | Path to the service's folder (by namespace) |
+| `openio_gridinit_rundir` | `/run/gridinit` | Path to the tmpfs subfolder |
+| `openio_gridinit_limits` | `dict` | Defines the max open files and limits for coredump |
 | `openio_gridinit_services` | `[]` | Defines services to configure |
-
 
 ## Dependencies
 
@@ -71,7 +69,7 @@ node1 ansible_host=192.168.1.173
 ```
 ## Service
 
-A `service` is a dict like this. Commented keys are optionals.
+A `service` is a dict like this. Commented keys are optional.
 
 ```yaml
 openio_gridinit_services:

@@ -1,5 +1,5 @@
 ---
-# defaults file for ansible-role-gridinit
+# defaults file for ansible-role-openio-gridinit
 
 openio_gridinit_user: root
 openio_gridinit_group: root
