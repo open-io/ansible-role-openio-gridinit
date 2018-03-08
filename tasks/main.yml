@@ -1,7 +1,8 @@
 ---
 # tasks file for ansible-role-gridinit
 
-- include_vars: "{{ item }}"
+- name: Include OS variables
+  include_vars: "{{ item }}"
   with_first_found:
     - "{{ ansible_distribution }}.yml"
     - "{{ ansible_os_family }}.yml"
