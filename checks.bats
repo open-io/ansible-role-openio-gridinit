@@ -3,6 +3,9 @@
 # Variable SUT_ID should be set outside this script and should contain the ID
 # number of the System Under Test.
 
+# debug
+set 
+
 # Tests
 @test 'configuration gridinit templatized' {
   run bash -c "docker exec -ti ${SUT_ID} head -n 1 /etc/gridinit.conf"
