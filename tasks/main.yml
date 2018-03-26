@@ -47,7 +47,7 @@
   with_items: "{{ openio_gridinit_services | map(attribute='namespace') | list }}"
   tags: install
 
-- name: Add gridinit configuration file
+- name: Add gridinit global configuration file
   template:
     src: gridinit.conf.j2
     dest: "{{ openio_gridinit_config_file }}"
@@ -56,7 +56,7 @@
   tags: configure
   notify: reload gridinit
 
-- name: Configuration gridinit services
+- name: Add gridinit per-service configuration file
   template:
     src: gridinit-service.j2
     dest: "{{ openio_gridinit_conf_confd }}/{{ item.namespace }}/{{ item.name }}.conf"
@@ -65,7 +65,7 @@
   tags: configure
   notify: reload gridinit
 
-- name: Configuration gridinit remove
+- name: Remove gridinit per-service configuration file
   file:
     path: "{{ openio_gridinit_conf_confd }}/{{ item.namespace }}/{{ item.name }}.conf"
     state: absent
