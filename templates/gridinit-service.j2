@@ -7,5 +7,5 @@ on_die={{ item.configuration.on_die }}
 group={% if item.configuration.group | default('')  -%}{{ item.configuration.group }},{% endif %}{{ item.namespace }},{{ item.type }},{{ item.name }}
 uid={{ item.configuration.uid }}
 gid={{ item.configuration.gid }}
-{% if item.configuration.env_PATH is defined %}env.PATH={{ item.configuration.env_PATH }}{% endif %}
-{% if item.configuration.env_LD_LIBRARY_PATH is defined %}env.LD_LIBRARY_PATH={{ item.configuration.env_LD_LIBRARY_PATH }}{% endif %}
+{% if item.configuration.env_PATH is defined %}env.PATH={{ item.configuration.env_PATH }}{% endif %}
+{% if item.configuration.env_LD_LIBRARY_PATH is defined %}env.LD_LIBRARY_PATH={{ item.configuration.env_LD_LIBRARY_PATH }}{% endif %}

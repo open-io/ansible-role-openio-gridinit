@@ -44,7 +44,7 @@
     path: "{{ openio_gridinit_conf_confd }}/{{ item }}"
     state: directory
     mode: 0755
-  with_items: "{{ openio_gridinit_services | map(attribute='namespace') | list }}"
+  with_items: "{{ openio_gridinit_services | map(attribute='namespace') | list }}"
   tags: install
 
 - name: Add gridinit configuration file
@@ -79,4 +79,5 @@
     name: "{{ openio_gridinit_service_name }}"
     state: started
   tags: configure
+
 ...
