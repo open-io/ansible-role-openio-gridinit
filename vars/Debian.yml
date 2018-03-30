@@ -5,6 +5,8 @@
 
 openio_gridinit_packages:
   - openio-gridinit
+  - openio-sds-logrotate
+  - openio-sds-rsyslog
 
 openio_gridinit_service_name: gridinit
 
