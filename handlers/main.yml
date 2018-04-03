@@ -3,3 +3,4 @@
 - name: reload gridinit
   gridinitcmd:
     state: reload
+...
