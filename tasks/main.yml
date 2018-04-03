@@ -51,8 +51,6 @@
   template:
     src: gridinit.conf.j2
     dest: "{{ openio_gridinit_config_file }}"
-  with_items: "{{ openio_gridinit_services }}"
-  when: (item.state | default('present')) == 'present'
   tags: configure
   notify: reload gridinit
 
