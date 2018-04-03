@@ -1,14 +1,13 @@
-# Test playbook for Ansible role cdelgehier.gridinit
+# Test playbook for Ansible role openio.gridinit
 ---
 
 - hosts: all
   become: true
   roles:
-    - role: repo-openio
+    - role: repository
 
     - role: role_under_test
-      openio_gridinit_repo_managed: true
-      openio_gridinit_services: 
+      openio_gridinit_services:
         - name: meta1-1
           namespace: OPENIO
           type: meta1
@@ -33,4 +32,4 @@
             group: bar
             uid: root
             gid: root
-
+...

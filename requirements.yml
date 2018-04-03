@@ -1,3 +1,5 @@
-- src: https://github.com/racciari/ansible-role-repo-openio-sds
+---
+- src: https://github.com/open-io/ansible-role-openio-repository.git
   version: master
-  name: repo-openio
+  name: repository
+...
