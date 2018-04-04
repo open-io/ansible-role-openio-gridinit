@@ -1,6 +1,8 @@
 ---
 # handlers file for ansible-role-gridinit
+
 - name: reload gridinit
   gridinitcmd:
     state: reload
+
 ...
