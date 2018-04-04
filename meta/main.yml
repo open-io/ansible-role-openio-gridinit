@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  author: Romain ACCIARI <romain@openio.io>
+  author: Romain ACCIARI <romain.acciari@openio.io>
   description: Install and configure gridinit for OPENIO
   company: OpenIO
   license: Apache
