@@ -12,6 +12,7 @@ openio_gridinit_limits:
   max_files: 65536
   stack_size: 8192
 
+openio_gridinit_conf_location: "{{ openio_gridinit_conf_confd }}/*/*"
 openio_gridinit_services: []
 
 ...
