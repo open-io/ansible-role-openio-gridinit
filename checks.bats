@@ -33,5 +33,5 @@
   echo "output: "$output
   echo "status: "$status
   [[ "${status}" -eq "0" ]]
-  [[ "${output}" =~ "OPENIO-meta1-1 BROKEN -1 OPENIO,meta1,meta1-1" ]] || [[ "${output}" =~ "OPENIO-meta1-1 DOWN -1 OPENIO,meta1,meta1-1" ]]
+  [[ "${output}" =~ "OPENIO-meta1-1 BROKEN -1 OPENIO,meta1,meta1-1" ]] || [[ "${output}" =~ "OPENIO-meta1-1 DOWN -1 OPENIO,meta1,meta1-1" ]] || [[ "${output}" =~ "OPENIO-meta1-1 UP -1 OPENIO,meta1,meta1-1" ]]
 }
