@@ -15,4 +15,6 @@ openio_gridinit_limits:
 openio_gridinit_conf_location: "{{ openio_gridinit_conf_confd }}/*/*"
 openio_gridinit_services: []
 
+openio_gridinit_per_ns: false
+
 ...
