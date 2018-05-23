@@ -5,7 +5,7 @@
 
 # Tests
 @test 'configuration gridinit templatized' {
-  run bash -c "docker exec -ti ${SUT_ID} head -n 1 /etc/gridinit.conf"
+  run bash -c "sudo docker exec -ti ${SUT_ID} head -n 1 /etc/gridinit.conf"
   echo "output: "$output
   echo "status: "$status
   [[ "${status}" -eq "0" ]]
@@ -14,24 +14,25 @@
 
 
 @test 'Namespace folder generation' {
-	run bash -c "docker exec -ti ${SUT_ID} ls /etc/gridinit.d | tr -s \"\t\" ' '"
-  echo "output: "$output
+	run bash -c "sudo docker exec -ti ${SUT_ID} bash -c 'find /etc/gridinit.d/ -type f|wc -l'"
+  echo "output: "${output}
   echo "status: "$status
   [[ "${status}" -eq "0" ]]
-  [[ "${output}" =~ "OPENIO OPENIO2" ]]
-}
-
-@test 'File with a state "absent" is not present' {
-  run bash -c "docker exec -ti ${SUT_ID} ls /etc/gridinit.d/OPENIO2/rawx-1.conf"
-  echo "output: "$output
-  echo "status: "$status
-  [[ "${status}" -eq "2" ]]
+  [[ "${output}" =~ "2" ]]
 }
 
 @test 'Status output' {
-  run bash -c "docker exec -ti ${SUT_ID} bash -c 'gridinit_cmd status' | tail -n1 | tr -s ' ' ' '"
+  run bash -c "sudo docker exec -ti ${SUT_ID} bash -c 'gridinit_cmd status|wc -l'"
   echo "output: "$output
   echo "status: "$status
   [[ "${status}" -eq "0" ]]
-  [[ "${output}" =~ "OPENIO-meta1-1 BROKEN -1 OPENIO,meta1,meta1-1" ]] || [[ "${output}" =~ "OPENIO-meta1-1 DOWN -1 OPENIO,meta1,meta1-1" ]] || [[ "${output}" =~ "OPENIO-meta1-1 UP -1 OPENIO,meta1,meta1-1" ]]
+  [[ "${output}" =~ "3" ]]
 }
+
+@test 'File with a state "absent" is not present' {
+  run bash -c "sudo docker exec -ti ${SUT_ID} bash -c 'find /etc/gridinit.d -type f|grep \"OPENIO2.rawx-1.conf\"'"
+  echo "output: "$output
+  echo "status: "$status
+  [[ "${status}" -eq "1" ]]
+}
+
