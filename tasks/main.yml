@@ -58,7 +58,8 @@
 - name: Add gridinit per-service configuration file
   template:
     src: gridinit-service.j2
-    dest: "{{ openio_gridinit_conf_confd + '/' + item.namespace + '/' + item.name + '.conf' if openio_gridinit_per_ns else openio_gridinit_conf_confd + '/' + item.namespace + '-' + item.name + '.conf' }}"
+    dest: "{{ openio_gridinit_conf_confd + '/' + item.namespace + '/' + item.name + '.conf'
+if openio_gridinit_per_ns else openio_gridinit_conf_confd + '/' + item.namespace + '-' + item.name + '.conf' }}"
   with_items: "{{ openio_gridinit_services }}"
   when: (item.state | default('present')) == 'present'
   tags: configure
@@ -66,7 +67,8 @@
 
 - name: Remove gridinit per-service configuration file
   file:
-    path: "{{ openio_gridinit_conf_confd + '/' + item.namespace + '/' + item.name + '.conf' if openio_gridinit_per_ns else openio_gridinit_conf_confd + '/' + item.namespace + '-' + item.name + '.conf' }}"
+    path: "{{ openio_gridinit_conf_confd + '/' + item.namespace + '/' + item.name + '.conf'
+if openio_gridinit_per_ns else openio_gridinit_conf_confd + '/' + item.namespace + '-' + item.name + '.conf' }}"
     state: absent
   with_items: "{{ openio_gridinit_services }}"
   when: (item.state | default('present')) == 'absent'
