@@ -7,7 +7,7 @@
     - role: repository
 
     - role: role_under_test
-      #openio_gridinit_per_ns: false
+      # openio_gridinit_per_ns: false
       openio_gridinit_services:
         - name: meta1-1
           namespace: OPENIO

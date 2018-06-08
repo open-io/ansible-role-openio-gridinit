@@ -1,5 +1,4 @@
 #! /usr/bin/env bash
-set -x
 #
 # Author:   Bert Van Vreckem <bert.vanvreckem@gmail.com>
 #
