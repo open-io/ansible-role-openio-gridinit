@@ -23,6 +23,7 @@ An Ansible role for gridinit. Specifically, the responsibilities of this role ar
 | `openio_gridinit_limits` | `dict` | Defines the max open files and limits for coredump |
 | `openio_gridinit_conf_location` | `{{ openio_gridinit_conf_confd }}/*/*` | Path of configurations to load |
 | `openio_gridinit_services` | `[]` | Defines services to configure |
+| `openio_gridinit_provision_only` | `false` | Toggle to handle reload manually |
 
 ## Dependencies
 
@@ -52,7 +53,7 @@ An Ansible role for gridinit. Specifically, the responsibilities of this role ar
         - name: rawx-1
           namespace: OPENIO2
           type: rawx
-          state: absent 
+          state: absent
           configuration:
             command: /bin/true
             enabled: true
@@ -87,7 +88,7 @@ openio_gridinit_services:
       uid: root
       gid: root
       #env_PATH: /usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
-      #env_LD_LIBRARY_PATH: 
+      #env_LD_LIBRARY_PATH:
 ```
 
 ## Contributing

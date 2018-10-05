@@ -7,6 +7,8 @@ openio_gridinit_config_file: /etc/gridinit.conf
 openio_gridinit_conf_confd: /etc/gridinit.d
 openio_gridinit_rundir: /run/gridinit
 
+openio_gridinit_provision_only: false
+
 openio_gridinit_limits:
   core_size: -1
   max_files: 65536

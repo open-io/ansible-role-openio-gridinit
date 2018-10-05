@@ -4,5 +4,6 @@
 - name: reload gridinit
   gridinitcmd:
     state: reload
+  when: not openio_gridinit_provision_only
 
 ...
