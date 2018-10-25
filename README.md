@@ -99,7 +99,7 @@ Pull requests are also very welcome. The best way to submit a PR is by first cre
 
 ## License
 
-Apache License, Version 2.0
+GNU AFFERO GENERAL PUBLIC LICENSE, Version 3
 
 ## Contributors
 
