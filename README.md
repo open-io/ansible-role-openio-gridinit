@@ -36,6 +36,9 @@ An Ansible role for gridinit. Specifically, the responsibilities of this role ar
   gather_facts: true
   become: true
   roles:
+    - role: repository
+    - role: users
+
     - role: ansible-role-gridinit
       openio_gridinit_services:
         - name: meta1-1

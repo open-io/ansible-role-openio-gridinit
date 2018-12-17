@@ -20,20 +20,6 @@
   retries: 5
   delay: 2
 
-- name: Create the 'openio' group
-  group:
-    name: openio
-    gid: "{{ openio_group_openio_gid | default('220') }}"
-  tags: install
-
-- name: Create the 'openio' user
-  user:
-    name: openio
-    comment: "openio account"
-    uid: "{{ openio_user_openio_uid | default('120') }}"
-    group: openio
-  tags: install
-
 - name: Ensure directories exists
   file:
     path: "{{ item }}"
