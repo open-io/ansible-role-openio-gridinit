@@ -5,6 +5,7 @@
   become: true
   roles:
     - role: repository
+    - role: users
 
     - role: role_under_test
       # openio_gridinit_per_ns: false
