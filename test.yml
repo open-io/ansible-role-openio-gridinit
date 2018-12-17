@@ -5,6 +5,10 @@
   become: true
   roles:
     - role: repository
+      openio_repository_no_log: false
+      openio_repository_products:
+        sds:
+          release: "18.10"
     - role: users
 
     - role: role_under_test
