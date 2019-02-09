@@ -19,6 +19,7 @@ An Ansible role for gridinit. Specifically, the responsibilities of this role ar
 | `openio_gridinit_group` | `root` | Group to run |
 | `openio_gridinit_config_file` | `/etc/gridinit.conf` | Path to the parent configuration file |
 | `openio_gridinit_conf_confd` | `/etc/gridinit.d` | Path to the service's folder (by namespace) |
+| `openio_gridinit_enabled` | `false` | Enable gridinit service on boot |
 | `openio_gridinit_rundir` | `/run/gridinit` | Path to the tmpfs subfolder |
 | `openio_gridinit_limits` | `dict` | Defines the max open files and limits for coredump |
 | `openio_gridinit_conf_location` | `{{ openio_gridinit_conf_confd }}/*/*` | Path of configurations to load |

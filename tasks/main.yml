@@ -70,6 +70,7 @@ if openio_gridinit_per_ns else openio_gridinit_conf_confd + '/' + item.namespace
   service:
     name: "{{ openio_gridinit_service_name }}"
     state: started
+    enabled: "{{ openio_gridinit_enabled }}"
   tags: configure
 
 ...

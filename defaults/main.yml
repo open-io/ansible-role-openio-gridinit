@@ -18,4 +18,5 @@ openio_gridinit_per_ns: false
 openio_gridinit_conf_location: "{% if openio_gridinit_per_ns %}{{ openio_gridinit_conf_confd }}/*/*
 {%- else %}{{ openio_gridinit_conf_confd }}/*{% endif %}"
 openio_gridinit_services: []
+openio_gridinit_enabled: false
 ...
