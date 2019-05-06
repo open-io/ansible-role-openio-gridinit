@@ -26,10 +26,10 @@ before_install:
   - sudo apt-get update
   - sudo apt-get install --only-upgrade git
   # Allow fetching other branches than master
-  - git config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
+  #- git config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
   # Fetch the branch with test code
-  - git fetch origin docker-tests
-  - git worktree add docker-tests origin/docker-tests
+  #- git fetch origin docker-tests
+  #- git worktree add docker-tests origin/docker-tests
   # retrieve centralized script
   - |
     for i in docker-tests.sh functional-tests.sh ansible.cfg; do
