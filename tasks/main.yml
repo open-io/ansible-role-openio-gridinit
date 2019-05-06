@@ -44,7 +44,7 @@
     src: gridinit.conf.j2
     dest: "{{ openio_gridinit_config_file }}"
   tags: configure
-  notify: reload gridinit
+  register: _add_conf_global
 
 - name: Add gridinit per-service configuration file
   template:
@@ -54,7 +54,7 @@ if openio_gridinit_per_ns else openio_gridinit_conf_confd + '/' + item.namespace
   with_items: "{{ openio_gridinit_services }}"
   when: (item.state | default('present')) == 'present'
   tags: configure
-  notify: reload gridinit
+  register: _add_conf_per_service
 
 - name: Remove gridinit per-service configuration file
   file:
@@ -64,13 +64,33 @@ if openio_gridinit_per_ns else openio_gridinit_conf_confd + '/' + item.namespace
   with_items: "{{ openio_gridinit_services }}"
   when: (item.state | default('present')) == 'absent'
   tags: configure
-  notify: reload gridinit
+  register: _remove_conf_per_service
 
-- name: Ensure service is started
-  service:
-    name: "{{ openio_gridinit_service_name }}"
-    state: started
-    enabled: "{{ openio_gridinit_enabled }}"
-  tags: configure
+- name: Reload gridinit
+  gridinitcmd:
+    state: reload
+  when:
+    - not openio_gridinit_provision_only
+    - _add_conf_global is changed or _add_conf_per_service is changed or _remove_conf_per_service is changed
+  ignore_errors: "{{ ansible_check_mode }}"
 
+- block:
+    - name: Ensure service is started
+      service:
+        name: "{{ openio_gridinit_service_name }}"
+        state: started
+        enabled: "{{ openio_gridinit_enabled }}"
+      when: not openio_gridinit_provision_only
+      tags: configure
+
+    - name: check gridinit
+      command: gridinit_cmd status
+      register: _gridinit_check
+      retries: 3
+      delay: 5
+      until: _gridinit_check is success
+      changed_when: false
+      failed_when:
+        - "'Connection refused' in _gridinit_check.stdout"
+  when: openio_bootstrap | d(false)
 ...
