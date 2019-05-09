@@ -67,8 +67,10 @@ if openio_gridinit_per_ns else openio_gridinit_conf_confd + '/' + item.namespace
   register: _remove_conf_per_service
 
 - name: Reload gridinit
-  gridinitcmd:
-    state: reload
+  service:
+    name: gridinit
+    state: reloaded
+    enabled: "{{ openio_gridinit_enabled }}"
   when:
     - not openio_gridinit_provision_only
     - _add_conf_global is changed or _add_conf_per_service is changed or _remove_conf_per_service is changed
