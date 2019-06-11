@@ -6,7 +6,9 @@
   with_first_found:
     - "{{ ansible_distribution }}.yml"
     - "{{ ansible_os_family }}.yml"
-  tags: install
+  tags:
+    - install
+    - configure
 
 - name: Install packages
   package:
@@ -28,7 +30,7 @@
   with_items:
     - "{{ openio_gridinit_conf_confd }}"
     - "{{ openio_gridinit_rundir }}"
-  tags: install
+  tags: configure
 
 - name: Ensure sub-directory for namespace exists
   file:
@@ -37,7 +39,7 @@
     mode: 0755
   with_items: "{{ openio_gridinit_services | map(attribute='namespace') | list }}"
   when: openio_gridinit_per_ns | bool
-  tags: install
+  tags: configure
 
 - name: Add gridinit global configuration file
   template:
@@ -75,6 +77,7 @@ if openio_gridinit_per_ns else openio_gridinit_conf_confd + '/' + item.namespace
     - not openio_gridinit_provision_only
     - _add_conf_global is changed or _add_conf_per_service is changed or _remove_conf_per_service is changed
   ignore_errors: "{{ ansible_check_mode }}"
+  tags: configure
 
 - block:
     - name: Ensure service is started
@@ -92,6 +95,7 @@ if openio_gridinit_per_ns else openio_gridinit_conf_confd + '/' + item.namespace
       delay: 5
       until: _gridinit_check is success
       changed_when: false
+      tags: configure
       failed_when:
         - "'Connection refused' in _gridinit_check.stdout"
   when: openio_bootstrap | d(false)
