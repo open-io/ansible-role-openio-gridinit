@@ -97,6 +97,8 @@ if openio_gridinit_per_ns else openio_gridinit_conf_confd + '/' + item.namespace
       changed_when: false
       tags: configure
       failed_when:
-        - "'Connection refused' in _gridinit_check.stdout"
+        - |
+          'Connection refused' in _gridinit_check.stdout
+            or 'Connection to UNIX socket' in _gridinit_check.stderr
   when: openio_bootstrap | d(false)
 ...
