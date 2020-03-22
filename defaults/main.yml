@@ -4,10 +4,10 @@
 openio_gridinit_user: root
 openio_gridinit_group: root
 openio_gridinit_config_file: /etc/gridinit.conf
-openio_gridinit_conf_confd: /etc/gridinit.d
+openio_gridinit_conf_confd: "{{ openio_gridinit_d | d('/etc/gridinit.d') }}"
 openio_gridinit_rundir: /run/gridinit
 
-openio_gridinit_provision_only: false
+openio_gridinit_provision_only: "{{ openio_maintenance_mode | d(false) | bool }}"
 
 openio_gridinit_limits:
   core_size: -1
@@ -15,8 +15,7 @@ openio_gridinit_limits:
   stack_size: 8192
 
 openio_gridinit_per_ns: false
-openio_gridinit_conf_location: "{% if openio_gridinit_per_ns %}{{ openio_gridinit_conf_confd }}/*/*
-{%- else %}{{ openio_gridinit_conf_confd }}/*{% endif %}"
+openio_gridinit_conf_location: "{{ openio_gridinit_includes | d(openio_gridinit_conf_confd ~ '/{*,*/*}') }}"
 openio_gridinit_services: []
-openio_gridinit_enabled: false
+openio_gridinit_enabled: "{{ openio_services_systemd_enabled | d(true) | bool }}"
 ...
