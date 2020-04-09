@@ -15,8 +15,8 @@ openio_gridinit_limits:
   stack_size: 8192
 
 openio_gridinit_per_ns: false
-openio_gridinit_conf_location: "{% if openio_gridinit_per_ns %}{{ openio_gridinit_conf_confd }}/*/*
-{%- else %}{{ openio_gridinit_conf_confd }}/*{% endif %}"
+openio_gridinit_conf_location: "{% if openio_gridinit_per_ns %}{{ openio_gridinit_conf_confd }}/*/*.conf
+{%- else %}{{ openio_gridinit_conf_confd }}/*.conf{% endif %}"
 openio_gridinit_services: []
 openio_gridinit_enabled: false
 ...
